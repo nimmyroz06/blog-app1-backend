@@ -99,6 +99,27 @@ app.post("/viewall", (req, res) => {
     })
 })
 
+
+app.post("/viewMy",(req,res)=>{
+    let input=req.body
+    let token=req.headers.token
+    Jwt.verify(token,"blogapp",(error,decoded)=>{
+        if (decoded && decoded.email) {
+            postModel.find(input).then(
+                (items)=>{
+                    res.json(items)
+                }
+            ).catch(
+                (error)=>{
+                    res.json({"status":"error"})
+                }
+            )
+        } else {
+            res.json({"status":"Invalid authorization"})
+        }
+    })
+})
+
 app.listen(3030, () => {
     console.log("Server started")
 })
