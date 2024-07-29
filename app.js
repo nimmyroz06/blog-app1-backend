@@ -66,6 +66,8 @@ app.post("/signIn", async (req, res) => {
     )
 })
 
+
+
 app.post("/viewall", (req, res) => {
     let token = req.headers.token
     Jwt.verify(token, "blogapp", (error, decoded) => {
