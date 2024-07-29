@@ -66,7 +66,19 @@ app.post("/signIn", async (req, res) => {
     )
 })
 
-
+app.post("/create",async(req,res)=>{
+    let input=req.body
+    let token =req.headers.token
+    Jwt.verify(token,"blogapp",async(eroor,decoded)=>{
+        if (decoded && decoded.email) {
+           let result= new postModel(input)
+            await result.save()
+            res.json({"status":"success"})
+        } else {
+            res.json({"status":"Invalid authentication"})
+        }
+    })
+    })
 
 app.post("/viewall", (req, res) => {
     let token = req.headers.token
